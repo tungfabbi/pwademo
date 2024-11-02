@@ -3,8 +3,8 @@
 let db;
 const dbName = 'storageTestDB';
 const storeName = 'testStore';
-const dataSize = 1024 * 1024; // Size of each data chunk in bytes (1MB)
-let running = false; // Control variable for stopping and resuming
+const dataSize = 1024 * 1024;
+let running = false;
 
 async function openDatabase() {
   return new Promise((resolve, reject) => {
@@ -72,6 +72,7 @@ async function testIndexedDBStorage() {
   document.getElementById('storage-result').innerText =
     'Starting storage test...';
   running = true;
+  setActiveButton('start-btn');
 
   try {
     await openDatabase();
@@ -86,10 +87,7 @@ async function testIndexedDBStorage() {
           (1024 * 1024)
         ).toFixed(2)} MB`;
 
-        // Update storage metrics
         await updateStorageMetrics();
-
-        // Add a delay to avoid freezing the main thread
         await new Promise((resolve) => setTimeout(resolve, 50));
       } catch (error) {
         document.getElementById(
@@ -106,4 +104,28 @@ async function testIndexedDBStorage() {
     document.getElementById('storage-result').innerText =
       'Error: ' + error.message;
   }
+}
+
+function startTest() {
+  if (!running) {
+    testIndexedDBStorage();
+  }
+}
+
+function stopTest() {
+  running = false;
+  setActiveButton('stop-btn');
+}
+
+function resumeTest() {
+  if (!running) {
+    testIndexedDBStorage();
+  }
+}
+
+function setActiveButton(buttonId) {
+  document.getElementById('start-btn').classList.remove('active');
+  document.getElementById('stop-btn').classList.remove('active');
+  document.getElementById('resume-btn').classList.remove('active');
+  document.getElementById(buttonId).classList.add('active');
 }

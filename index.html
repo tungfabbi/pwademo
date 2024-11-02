@@ -3,15 +3,82 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple PWA Demo</title>
+    <title>PWA IndexedDB Quota Test</title>
     <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="indexedDB-test.js" defer></script>
+    <style>
+      /* Style for the buttons to make them larger and user-friendly */
+      button {
+        font-size: 1.5em;
+        padding: 15px 30px;
+        margin: 10px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        color: white;
+      }
+
+      /* Specific colors for each button */
+      .start-btn {
+        background-color: #4caf50;
+      } /* Start button */
+      .stop-btn {
+        background-color: #ff6347;
+      } /* Stop button */
+      .resume-btn {
+        background-color: #1e90ff;
+      } /* Resume button */
+
+      /* Hover effect for each button */
+      .start-btn:hover {
+        background-color: #45a049;
+      }
+      .stop-btn:hover {
+        background-color: #e54e3e;
+      }
+      .resume-btn:hover {
+        background-color: #1c86ee;
+      }
+
+      /* Active state indication */
+      .active {
+        border: 2px solid #ffd700; /* Gold border for active button */
+        color: #ffd700; /* Gold text to indicate activation */
+      }
+
+      /* Center-align the buttons */
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: Arial, sans-serif;
+      }
+
+      #storage-metrics,
+      #storage-result {
+        text-align: center;
+        max-width: 400px;
+        margin-top: 20px;
+      }
+    </style>
+    <script src="indexedDBQuotaTest.js" defer></script>
   </head>
   <body>
-    <h1>Hello, PWA!</h1>
-    <p>This is a simple PWA demo.</p>
-    <button onclick="testIndexedDBStorage()">Test IndexedDB Storage</button>
+    <h1>IndexedDB Quota Test</h1>
+    <button class="start-btn" onclick="startTest()" id="start-btn">
+      Start Test
+    </button>
+    <button class="stop-btn" onclick="stopTest()" id="stop-btn">Stop</button>
+    <button class="resume-btn" onclick="resumeTest()" id="resume-btn">
+      Resume
+    </button>
+    <div id="storage-metrics">
+      <p><strong>Storage Metrics:</strong></p>
+      <p>Total: <span id="total-storage">Calculating...</span></p>
+      <p>Used: <span id="used-storage">Calculating...</span></p>
+      <p>Remaining: <span id="remaining-storage">Calculating...</span></p>
+    </div>
     <div id="storage-result"></div>
   </body>
 </html>
